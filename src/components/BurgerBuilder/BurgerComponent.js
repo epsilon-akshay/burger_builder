@@ -6,7 +6,7 @@ class BurgerComponent extends Component {
 			<div className={classes.BuildConrol}>
 				<div className={classes.Label}>{this.props.label}</div>
 				<button className={classes.More} onClick={this.props.event}> more</button>
-				<button className={classes.More}>  less</button>
+				<button className={classes.More} onClick={this.props.remove}>  less</button>
 			</div>
 		)
 	}

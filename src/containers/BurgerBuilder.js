@@ -22,11 +22,24 @@ class BurgerBuilder extends Component {
 		this.setState({ ingredientsMap: updatedIngredient })
 	}
 
+	removeIngredientHandler = (ingredient) => {
+		let newCount = this.state.ingredientsMap[ingredient] - 1
+		if (newCount < 0) {
+			newCount = 0
+		}
+
+		const updatedIngredient = {
+			...this.state.ingredientsMap
+		}
+		updatedIngredient[ingredient] = newCount
+		this.setState({ ingredientsMap: updatedIngredient })
+	}
+
 	render() {
 		return (
 			<Aux>
 				<Burger ingredients={this.state.ingredientsMap} />
-				<BurgerBuilderComponent onClickHandler={this.addIngredientHandler} />
+				<BurgerBuilderComponent onClickHandler={this.addIngredientHandler} onRemoveHandler={this.removeIngredientHandler} />
 			</Aux>
 		)
 	}
