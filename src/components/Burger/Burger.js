@@ -11,7 +11,12 @@ class Burger extends Component {
 						return <Ingredients key={index + val} type={val} />
 					})
 			}
-		)
+		).reduce((arr, elem) => {
+			return arr.concat(elem)
+		}, [])
+		if (ingredientsInOrder.length === 0) {
+			ingredientsInOrder = <p>please start adding ingredients</p>
+		}
 		return (
 			<div className={styles.Burger}>
 				<Ingredients type='bread-top' />

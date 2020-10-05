@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import Aux from "../components/hoc/Aux"
 import Burger from '../components/Burger/Burger'
+import BurgerBuilderComponent from '../components/BurgerBuilder/BurgerBuilderComponent'
 
 class BurgerBuilder extends Component {
 	state = {
@@ -10,8 +12,23 @@ class BurgerBuilder extends Component {
 			bacon: 1
 		}
 	}
+
+	addIngredientHandler = (ingredient) => {
+		const newCount = this.state.ingredientsMap[ingredient] + 1
+		const updatedIngredient = {
+			...this.state.ingredientsMap
+		}
+		updatedIngredient[ingredient] = newCount
+		this.setState({ ingredientsMap: updatedIngredient })
+	}
+
 	render() {
-		return <Burger ingredients={this.state.ingredientsMap} />
+		return (
+			<Aux>
+				<Burger ingredients={this.state.ingredientsMap} />
+				<BurgerBuilderComponent onClickHandler={this.addIngredientHandler} />
+			</Aux>
+		)
 	}
 }
 
