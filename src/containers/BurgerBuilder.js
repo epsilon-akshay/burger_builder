@@ -4,6 +4,7 @@ import Burger from '../components/Burger/Burger'
 import BurgerBuilderComponent from '../components/BurgerBuilder/BurgerBuilderComponent'
 import Modal from "../components/Ui/Modal/Modal"
 import OrderSummary from '../components/OrderSummary/OrderSummary'
+import axiosInstance from '../axios'
 
 class BurgerBuilder extends Component {
 	state = {
@@ -61,11 +62,14 @@ class BurgerBuilder extends Component {
 		this.isPurchasable()
 	}
 
+	orderButtonHandler = () => {
+		axiosInstance.post("/orders.json", this.state.ingredientsMap)
+	}
 	render() {
 		return (
 			<Aux>
 				<Modal show={this.state.isPurchasing} handleBackdrop={this.isNotPurchasing}>
-					<OrderSummary orderButtonHandler={() => { alert("continue") }} ingredients={this.state.ingredientsMap} />
+					<OrderSummary orderButtonHandler={this.orderButtonHandler} ingredients={this.state.ingredientsMap} cancelHandler={this.isNotPurchasing} />
 				</Modal>
 				<Burger ingredients={this.state.ingredientsMap} />
 				<BurgerBuilderComponent isPurchasingHandler={this.isPurchasing} onClickHandler={this.addIngredientHandler} onRemoveHandler={this.removeIngredientHandler} isPurchasable={!this.state.purchasable} />
