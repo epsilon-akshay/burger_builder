@@ -5,7 +5,8 @@ import BurgerBuilderComponent from '../components/BurgerBuilder/BurgerBuilderCom
 import Modal from "../components/Ui/Modal/Modal"
 import OrderSummary from '../components/OrderSummary/OrderSummary'
 import axiosInstance from '../axios'
-
+import Spinner from '../components/Ui/Spinner/Spinner'
+import WithError from '../components/hoc/WithError/WithError'
 class BurgerBuilder extends Component {
 	state = {
 		ingredientsMap: {
@@ -15,7 +16,8 @@ class BurgerBuilder extends Component {
 			bacon: 0
 		},
 		purchasable: false,
-		purchasing: false
+		purchasing: false,
+		loading: false
 	}
 
 	addIngredientHandler = (ingredient) => {
@@ -63,13 +65,39 @@ class BurgerBuilder extends Component {
 	}
 
 	orderButtonHandler = () => {
+		this.setState({ loading: true })
 		axiosInstance.post("/orders.json", this.state.ingredientsMap)
+			.then((response) => {
+				console.log(response)
+				this.setState({ loading: false })
+				this.setState({ isPurchasing: false })
+			})
+			.catch((response) => {
+				console.log(response)
+				this.setState({ loading: false })
+				this.setState({ isPurchasing: false })
+			})
+	}
+
+	showOrderSummaryOrModal = () => {
+		if (this.state.loading) {
+			console.log("spinnerrrrr")
+			return <Spinner />
+		}
+		return <OrderSummary orderButtonHandler={this.orderButtonHandler} ingredients={this.state.ingredientsMap} cancelHandler={this.isNotPurchasing} />
 	}
 	render() {
+		let os = null
+		if (this.state.loading) {
+			console.log("spinnerrrrr")
+			os = <Spinner />
+		} else {
+			os = <OrderSummary orderButtonHandler={this.orderButtonHandler} ingredients={this.state.ingredientsMap} cancelHandler={this.isNotPurchasing} />
+		}
 		return (
 			<Aux>
 				<Modal show={this.state.isPurchasing} handleBackdrop={this.isNotPurchasing}>
-					<OrderSummary orderButtonHandler={this.orderButtonHandler} ingredients={this.state.ingredientsMap} cancelHandler={this.isNotPurchasing} />
+					{os}
 				</Modal>
 				<Burger ingredients={this.state.ingredientsMap} />
 				<BurgerBuilderComponent isPurchasingHandler={this.isPurchasing} onClickHandler={this.addIngredientHandler} onRemoveHandler={this.removeIngredientHandler} isPurchasable={!this.state.purchasable} />
@@ -78,4 +106,4 @@ class BurgerBuilder extends Component {
 	}
 }
 
-export default BurgerBuilder
+export default WithError(BurgerBuilder)
