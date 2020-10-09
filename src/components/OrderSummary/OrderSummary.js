@@ -1,18 +1,21 @@
-import React, { Component } from 'react'
+import React from 'react'
+import Aux from '../hoc/Aux'
 
 const orderSummary = (props) => {
 
 	const summary = Object.keys(props.ingredients).map(
 		(val) => {
-			return <li>{val} : {props.ingredients[val]}</li>
+			return <li key={val}>{val} : {props.ingredients[val]}</li>
 		}
 	)
 
 	return (
-		<ul>
-			{summary}
-		</ul>
-
+		<Aux>
+			<ul>
+				{summary}
+			</ul>
+			<button onClick={props.orderButtonHandler}>Checkout</button>
+		</Aux>
 	)
 }
 

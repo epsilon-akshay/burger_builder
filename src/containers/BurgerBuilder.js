@@ -65,7 +65,7 @@ class BurgerBuilder extends Component {
 		return (
 			<Aux>
 				<Modal show={this.state.isPurchasing} handleBackdrop={this.isNotPurchasing}>
-					<OrderSummary ingredients={this.state.ingredientsMap} />
+					<OrderSummary orderButtonHandler={() => { alert("continue") }} ingredients={this.state.ingredientsMap} />
 				</Modal>
 				<Burger ingredients={this.state.ingredientsMap} />
 				<BurgerBuilderComponent isPurchasingHandler={this.isPurchasing} onClickHandler={this.addIngredientHandler} onRemoveHandler={this.removeIngredientHandler} isPurchasable={!this.state.purchasable} />
