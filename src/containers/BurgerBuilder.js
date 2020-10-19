@@ -79,17 +79,9 @@ class BurgerBuilder extends Component {
 			})
 	}
 
-	showOrderSummaryOrModal = () => {
-		if (this.state.loading) {
-			console.log("spinnerrrrr")
-			return <Spinner />
-		}
-		return <OrderSummary orderButtonHandler={this.orderButtonHandler} ingredients={this.state.ingredientsMap} cancelHandler={this.isNotPurchasing} />
-	}
 	render() {
 		let os = null
 		if (this.state.loading) {
-			console.log("spinnerrrrr")
 			os = <Spinner />
 		} else {
 			os = <OrderSummary orderButtonHandler={this.orderButtonHandler} ingredients={this.state.ingredientsMap} cancelHandler={this.isNotPurchasing} />
@@ -106,4 +98,4 @@ class BurgerBuilder extends Component {
 	}
 }
 
-export default WithError(BurgerBuilder)
+export default WithError(BurgerBuilder, axiosInstance)
