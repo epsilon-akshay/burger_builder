@@ -13,4 +13,24 @@
 
 .Toolbar nav {
     height: 100%;
+    background-color: orange;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.Toolbar li {
+    height: 100%;
+    padding: 10px;
+    color: yellow;
+}
+
+.Logo {
+    height: 100%;
+}
+
+@media (max-width: 499px) {
+    .DesktopOnly {
+        display: none;
+    }
 }
